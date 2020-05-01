@@ -13,6 +13,7 @@ export class BookListComponent implements OnInit {
 
   books: Book[];
   currentCategoryId: number;
+  searchMode: boolean;
 
   constructor(
                 private _bookService: BookService,
@@ -29,6 +30,19 @@ export class BookListComponent implements OnInit {
 
   listBooks() {
 
+    this.searchMode = this._activatedRoute.snapshot.paramMap.has('keyword');
+
+    if(this.searchMode){
+      //do a search work
+      this.handleSearchBooks();
+    } else{
+      // Display books based category
+      this.handleListBooks()
+    }
+    
+  }
+
+  handleListBooks(){
     const hasCategoryId: boolean = this._activatedRoute.snapshot.paramMap.has('id');
 
     if(hasCategoryId){
@@ -44,54 +58,15 @@ export class BookListComponent implements OnInit {
       }
     )
   }
+  handleSearchBooks(){
+    const keyword: string = this._activatedRoute.snapshot.paramMap.get('keyword');
 
-/* -------------------------------------- */
-/* books: Book[] = [
-  {
-    "sku": "text-100",
-    "name": "C Programming Language",
-    "description": "Learn C Programming Language",
-    "unitPrice": 600.00,
-    "imageUrl": "assets/images/books/text-100.png",
-    "active": true,
-    "unitsInStock": 100,
-    "createdOn": new Date(),
-    "updatedOn": null,
-  },
-  {
-    "sku": "text-101",
-      "name": "C# Crash Course",
-      "description": "Learn C# Programming Language",
-      "unitPrice": 900.00,
-      "imageUrl": "assets/images/books/text-101.png",
-      "active": true,
-      "unitsInStock": 100,
-      "createdOn": new Date(),
-      "updatedOn": null,
-  },
-  {
-    "sku": "text-102",
-    "name": "C++ Crash Course",
-    "description": "Learn C++ Programming Language",
-    "unitPrice": 700.00,
-    "imageUrl": "assets/images/books/text-102.png",
-    "active": true,
-    "unitsInStock": 100,
-    "createdOn": new Date(),
-    "updatedOn": null,
-  },
-  {
-    "sku": "text-103",
-    "name": "Cracking The Coding Interview",
-    "description": "Learn Cracking the coding interview",
-    "unitPrice": 1000.00,
-    "imageUrl": "assets/images/books/text-103.png",
-    "active": true,
-    "unitsInStock": 100,
-    "createdOn": new Date(),
-    "updatedOn": null,
+    this._bookService.searchBooks(keyword).subscribe(
+      data => {
+        console.log(data);
+        this.books = data;
+      }
+    )
   }
-] */
-/* -------------------------------------- */
 
 }

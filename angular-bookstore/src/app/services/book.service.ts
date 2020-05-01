@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Book } from '../common/book';
+import { BookCategory } from '../common/book-category';
 
 
 @Injectable({
@@ -22,11 +23,22 @@ export class BookService {
     )
   }
 
+  getBookCategory(): Observable<BookCategory[]> {
+    return this.httpClient.get<GetResponseBookCategory>(this.categoryUrl).pipe(
+      map(response => response._embedded.bookCategory)
+    )
+  }
+
 }
 
 
 interface GetResponseBooks{
   _embedded:{
     books: Book[];
+  }
+}
+interface GetResponseBookCategory{
+  _embedded:{
+    bookCategory: BookCategory[];
   }
 }

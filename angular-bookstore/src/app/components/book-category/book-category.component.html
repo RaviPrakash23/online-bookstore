@@ -1,0 +1,4 @@
+<div class="list-group">
+    <!-- <a *ngFor="let category of bookCategory" routerLink="/category/{{category.id}}" class="list-group-item" routerLinkActive="bg-primary text-white font-weight-bold">{{category.categoryName}}</a> -->
+    <a *ngFor="let category of bookCategory" [routerLink]="'/category/'+category.id" class="list-group-item" routerLinkActive="bg-primary text-white font-weight-bold">{{category.categoryName}}</a>
+  </div>

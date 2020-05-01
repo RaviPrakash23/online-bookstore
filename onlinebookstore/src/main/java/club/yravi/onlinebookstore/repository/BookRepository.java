@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import club.yravi.onlinebookstore.entity.Book;
 
-@CrossOrigin("http://localhost:4200/")
+//@CrossOrigin("http://localhost:4200/") :: verify CrossOrigin in config 
 /* @CrossOrigin("*") */
 public interface BookRepository extends JpaRepository<Book, Long>{
 	/*

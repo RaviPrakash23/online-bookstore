@@ -11,12 +11,13 @@ import { Book } from '../common/book';
 export class BookService {
 
   private baseUrl = "http://localhost:8091/api/v1/books";
-  //private categoryUrl = "http://localhost:8091/api/v1/book-category";
+  private categoryUrl = "http://localhost:8091/api/v1/book-category";
 
   constructor(private httpClient: HttpClient) { }
 
-  getBooks(): Observable<Book[]> {
-    return this.httpClient.get<GetResponseBooks>(this.baseUrl).pipe(
+  getBooks( theCategoryId: number): Observable<Book[]> {
+    const searchUrl = `${this.baseUrl}/search/categoryid?id=${theCategoryId}`;
+    return this.httpClient.get<GetResponseBooks>(searchUrl).pipe(
       map(response => response._embedded.books)
     )
   }
